@@ -21,8 +21,8 @@ const x = d3.scaleTime()
   .domain([new Date(2015, 4, 1), new Date(2016, 12, 31)])
   .range([0, width]);
 
-const y = d3.scaleLinear()
-  .rangeRound([height, 0]);
+const y = d3.scaleLog()
+  .range([height, 0]);
 
 const g = svg.append("g")
   .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -37,7 +37,7 @@ d3.csv("data.csv", d => {
   if (error) throw error;
 
   // x.domain(data.map(d => d.letter));
-  y.domain([0, d3.max(data, d => d.unitsShipped)]);
+  y.domain([Number('1e-1'), d3.max(data, d => d.unitsShipped)]);
 
   const xAxis = d3.axisBottom()
     .scale(x)
