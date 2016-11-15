@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis--x path {
+  display: none;
+}
+
+</style>
+<svg width="960" height="500"></svg>
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
+<script>
+
+const svg = d3.select("svg");
+const margin = {top: 20, right: 20, bottom: 30, left: 70};
+const width = +svg.attr("width") - margin.left - margin.right;
+const height = +svg.attr("height") - margin.top - margin.bottom;
+
+const x = d3.scaleTime()
+  .domain([new Date(2015, 4, 1), new Date(2016, 12, 31)])
+  .range([0, width]);
+
+const y = d3.scaleLinear()
+  .rangeRound([height, 0]);
+
+const g = svg.append("g")
+  .attr("transform", `translate(${margin.left},${margin.top})`);
+
+const parseDate = d3.utcParse('%Y%B');
+
+d3.csv("data.csv", d => {
+  d.unitsShipped = +d.unitsShipped;
+  d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
+  return d;
+}, (error, data) => {
+  if (error) throw error;
+
+  // x.domain(data.map(d => d.letter));
+  y.domain([0, d3.max(data, d => d.unitsShipped)]);
+
+  const xAxis = d3.axisBottom()
+    .scale(x)
+    // .ticks(d3.timeMonths)
+    // .tickSize(16, 0)
+    .tickFormat(d3.timeFormat("%B %Y"));
+
+  const yAxis = d3.axisLeft()
+    .scale(y)
+    .ticks(10, ",.0f");
+
+  g.append("g")
+    .attr("class", "axis axis--x")
+    .attr("transform", `translate(0,${height})`)
+    .call(xAxis);
+
+  g.append("g")
+      .attr("class", "axis axis--y")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "0.71em")
+      .attr("text-anchor", "end")
+      .text("Frequency");
+
+  g.selectAll(".bar")
+    .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", d => x(d.launchDate))
+      .attr("y", d => y(d.unitsShipped))
+      .attr("width", 10)
+      .attr("height", d => height - y(d.unitsShipped))
+      .on('mouseover', d => console.log(d));
+
+
+});
+
+</script>
