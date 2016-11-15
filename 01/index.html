@@ -2,16 +2,8 @@
 <meta charset="utf-8">
 <style>
 
-.bar {
-  fill: steelblue;
-}
-
-.bar:hover {
-  fill: brown;
-}
-
 .axis--x path {
-  display: none;
+  display: visible;
 }
 
 </style>
@@ -51,6 +43,7 @@ d3.csv("data.csv", d => {
     .scale(x)
     // .ticks(d3.timeMonths)
     // .tickSize(16, 0)
+    .tickSizeOuter(0)
     .tickFormat(d3.timeFormat("%B %Y"));
 
   const yAxis = d3.axisLeft()
@@ -72,15 +65,37 @@ d3.csv("data.csv", d => {
       .attr("text-anchor", "end")
       .text("Frequency");
 
+  // draw the bars
   g.selectAll(".bar")
     .data(data)
     .enter().append("rect")
       .attr("class", "bar")
       .attr("x", d => x(d.launchDate))
-      .attr("y", d => y(d.unitsShipped))
-      .attr("width", 10)
+      // + 1px y so that bar does not protrude
+      // above the dot
+      .attr("y", d => y(d.unitsShipped) + 1)
+      .attr("width", 4)
       .attr("height", d => height - y(d.unitsShipped))
+      .style('fill', 'black')
       .on('mouseover', d => console.log(d));
+
+  // draw the circles at the top of the bars
+  g.selectAll(".circle")
+    .data(data)
+    .enter().append("circle")
+      .attr("class", "point")
+      .attr("cx", d => x(d.launchDate) + 2)
+      .attr("cy", d => y(d.unitsShipped) + 6)
+      .attr("r", 6)
+      .style('fill', 'black')
+      .style('fill-opacity', 1.0)
+      .on('mouseover', d => console.log(d));
+
+  // style the x-axis baseline
+  d3.select('.axis--x path')
+    .style('stroke-width', 4)
+    .style('stroke-opacity', 1.0)
+    .attr('transform', 'translate(0,1.6)');
 
 
 });
