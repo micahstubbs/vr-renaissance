@@ -81,6 +81,7 @@ d3.csv("data.csv", d => {
       .attr('points', "-1,0 -2,2 2,0 -2,-2")
       .attr('fill', 'black');
 
+  // draw the baseline with an arrow
   d3.select('svg')
     .append('line')
       .attr('x1', margin.left)
@@ -118,6 +119,26 @@ d3.csv("data.csv", d => {
       .style('fill', 'black')
       .style('fill-opacity', 1.0)
       .on('mouseover', d => console.log(d));
+
+  // start with the axes hidden
+  let axesVisible = false;
+  d3.selectAll('.axis')
+    .style('opacity', 0);
+
+  d3.select('body')
+    .on('click', click);
+
+  function click() {
+    if (axesVisible) {
+      d3.selectAll('.axis')
+        .style('opacity', 0);
+      axesVisible = false;
+    } else {
+      d3.selectAll('.axis')
+        .style('opacity', 1);
+      axesVisible = true;
+    } 
+  }
 });
 
 </script>
