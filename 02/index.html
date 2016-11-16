@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
+<meta charset='utf-8'>
 <style>
 </style>
-<svg width="960" height="539"></svg>
-<script src="https://d3js.org/d3.v4.js"></script>
+<svg width='960' height='539'></svg>
+<script src='https://d3js.org/d3.v4.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
 <script>
 
-const svg = d3.select("svg");
+const svg = d3.select('svg');
 const margin = {top: 230, right: 20, bottom: 30, left: 60};
-const width = +svg.attr("width") - margin.left - margin.right;
-const height = +svg.attr("height") - margin.top - margin.bottom;
+const width = +svg.attr('width') - margin.left - margin.right;
+const height = +svg.attr('height') - margin.top - margin.bottom;
 
 const x = d3.scaleTime()
   .domain([new Date(2015, 4, 1), new Date(2016, 12, 31)])
@@ -19,12 +19,12 @@ const x = d3.scaleTime()
 const y = d3.scaleLog()
   .range([height, 0]);
 
-const g = svg.append("g")
-  .attr("transform", `translate(${margin.left},${margin.top})`);
+const g = svg.append('g')
+  .attr('transform', `translate(${margin.left},${margin.top})`);
 
 const parseDate = d3.utcParse('%Y%B');
 
-d3.csv("data.csv", d => {
+d3.csv('data.csv', d => {
   d.unitsShipped = +d.unitsShipped;
   d.imageWidth = +d.imageWidth;
   d.imageHeight = +d.imageHeight;
@@ -43,26 +43,26 @@ d3.csv("data.csv", d => {
     // .ticks(d3.timeMonths)
     // .tickSize(16, 0)
     .tickSizeOuter(0)
-    .tickFormat(d3.timeFormat("%B %Y"));
+    .tickFormat(d3.timeFormat('%B %Y'));
 
   const yAxis = d3.axisLeft()
     .scale(y)
-    .ticks(10, ",.0f");
+    .ticks(10, ',.0f');
 
-  g.append("g")
-    .attr("class", "axis axis--x")
-    .attr("transform", `translate(0,${height})`)
+  g.append('g')
+    .attr('class', 'axis axis--x')
+    .attr('transform', `translate(0,${height})`)
     .call(xAxis);
 
-  g.append("g")
-      .attr("class", "axis axis--y")
+  g.append('g')
+      .attr('class', 'axis axis--y')
       .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", "0.71em")
-      .attr("text-anchor", "end")
-      .text("Frequency");
+    .append('text')
+      .attr('transform', 'rotate(-90)')
+      .attr('y', 6)
+      .attr('dy', '0.71em')
+      .attr('text-anchor', 'end')
+      .text('Frequency');
 
   // style the x-axis path
   d3.select('.axis--x path')
@@ -82,7 +82,7 @@ d3.csv("data.csv", d => {
     .attr('orient', 'auto')
     .attr('overflow', 'visible')
     .append('polygon')
-      .attr('points', "-1,0 -2,2 2,0 -2,-2")
+      .attr('points', '-1,0 -2,2 2,0 -2,-2')
       .attr('fill', 'black');
 
   // draw the baseline with an arrow
@@ -99,27 +99,27 @@ d3.csv("data.csv", d => {
       .attr('marker-end', 'url(#arrow)');
 
   // draw the bars
-  g.selectAll(".bar")
+  g.selectAll('.bar')
     .data(data)
-    .enter().append("rect")
-      .attr("class", "bar")
-      .attr("x", d => x(d.launchDate))
+    .enter().append('rect')
+      .attr('class', 'bar')
+      .attr('x', d => x(d.launchDate))
       // + 1px y so that bar does not protrude
       // above the dot
-      .attr("y", d => y(d.unitsShipped) + 1)
-      .attr("width", 4)
-      .attr("height", d => height - y(d.unitsShipped))
+      .attr('y', d => y(d.unitsShipped) + 1)
+      .attr('width', 4)
+      .attr('height', d => height - y(d.unitsShipped))
       .style('fill', 'black')
       .on('mouseover', d => console.log(d));
 
   // draw the circles at the top of the bars
-  g.selectAll(".circle")
+  g.selectAll('.circle')
     .data(data)
-    .enter().append("circle")
-      .attr("class", "point")
-      .attr("cx", d => x(d.launchDate) + 2)
-      .attr("cy", d => y(d.unitsShipped) + 6)
-      .attr("r", 6)
+    .enter().append('circle')
+      .attr('class', 'point')
+      .attr('cx', d => x(d.launchDate) + 2)
+      .attr('cy', d => y(d.unitsShipped) + 6)
+      .attr('r', 6)
       .style('fill', 'black')
       .style('fill-opacity', 1.0)
       .on('mouseover', d => console.log(d));
@@ -128,28 +128,33 @@ d3.csv("data.csv", d => {
   // draw head-mounted-display images
   //
   const imageScaleFactor = 8;
-  const images = svg.selectAll("image")
+  const images = svg.selectAll('image')
     .data(data)
     .enter()
-    .append("svg:image")
-      .attr("xlink:href", d => d.imageFileName)
-      .attr("x", d => (x(d.launchDate)   + margin.left + d.imageXOffset  - (d.imageWidth  / imageScaleFactor) / 2))
-      .attr("y", d => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (d.imageHeight / imageScaleFactor)))
-      .attr("width", d => d.imageWidth / imageScaleFactor)
-      .attr("height", d => d.imageHeight / imageScaleFactor)
+    .append('svg:image')
+      .attr('xlink:href', d => d.imageFileName)
+      .attr('x', d => (x(d.launchDate)   + margin.left + d.imageXOffset  - (d.imageWidth  / imageScaleFactor) / 2))
+      .attr('y', d => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (d.imageHeight / imageScaleFactor)))
+      .attr('width', d => d.imageWidth / imageScaleFactor)
+      .attr('height', d => d.imageHeight / imageScaleFactor)
       .call(d3.drag()
-        .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended));
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended));
 
   function dragstarted(d) {
-    d3.select(this).raise().classed("active", true);
+    d3.select(this)
+      .raise()
+      .classed('active', true);
   }
   function dragged(d) {
-    d3.select(this).attr("x", d.x = d3.event.x).attr("y", d.y = d3.event.y);
+    d3.select(this)
+      .attr('x', d.x = d3.event.x)
+      .attr('y', d.y = d3.event.y);
   }
   function dragended(d) {
-    d3.select(this).classed("active", false);
+    d3.select(this)
+      .classed('active', false);
   }
 
   // start with the axes hidden
