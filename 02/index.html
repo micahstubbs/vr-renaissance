@@ -8,7 +8,7 @@
 <script>
 
 const svg = d3.select("svg");
-const margin = {top: 150, right: 20, bottom: 30, left: 70};
+const margin = {top: 150, right: 20, bottom: 30, left: 60};
 const width = +svg.attr("width") - margin.left - margin.right;
 const height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -26,6 +26,10 @@ const parseDate = d3.utcParse('%Y%B');
 
 d3.csv("data.csv", d => {
   d.unitsShipped = +d.unitsShipped;
+  d.imageWidth = +d.imageWidth;
+  d.imageHeight = +d.imageHeight;
+  d.imageXOffset = +d.imageXOffset;
+  d.imageYOffset = +d.imageYOffset;
   d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
   return d;
 }, (error, data) => {
@@ -82,7 +86,7 @@ d3.csv("data.csv", d => {
       .attr('fill', 'black');
 
   // draw the baseline with an arrow
-  d3.select('svg')
+  svg
     .append('line')
       .attr('x1', margin.left)
       .attr('y1', height + margin.top)
@@ -119,6 +123,20 @@ d3.csv("data.csv", d => {
       .style('fill', 'black')
       .style('fill-opacity', 1.0)
       .on('mouseover', d => console.log(d));
+
+  //
+  // draw head-mounted-display images
+  //
+  const imageScaleFactor = 10;
+  const images = svg.selectAll("image")
+    .data(data)
+    .enter()
+    .append("svg:image")
+      .attr("xlink:href", d => d.imageFileName)
+      .attr("x", d => (x(d.launchDate)   + margin.left + d.imageXOffset  - (d.imageWidth  / imageScaleFactor) / 2))
+      .attr("y", d => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (d.imageHeight / imageScaleFactor)))
+      .attr("width", d => d.imageWidth / imageScaleFactor)
+      .attr("height", d => d.imageHeight / imageScaleFactor);
 
   // start with the axes hidden
   let axesVisible = false;

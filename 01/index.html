@@ -8,7 +8,7 @@
 <script>
 
 const svg = d3.select('svg');
-const margin = {top: 150, right: 20, bottom: 30, left: 70};
+const margin = {top: 150, right: 20, bottom: 30, left: 60};
 const width = +svg.attr('width') - margin.left - margin.right;
 const height = +svg.attr('height') - margin.top - margin.bottom;
 
@@ -82,7 +82,7 @@ d3.csv('data.csv', d => {
       .attr('fill', 'black');
 
   // draw the baseline with an arrow
-  d3.select('svg')
+  svg
     .append('line')
       .attr('x1', margin.left)
       .attr('y1', height + margin.top)
