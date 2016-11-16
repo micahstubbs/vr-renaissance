@@ -2,13 +2,13 @@
 <meta charset="utf-8">
 <style>
 </style>
-<svg width="960" height="500"></svg>
+<svg width="960" height="539"></svg>
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
 <script>
 
 const svg = d3.select("svg");
-const margin = {top: 150, right: 20, bottom: 30, left: 60};
+const margin = {top: 230, right: 20, bottom: 30, left: 60};
 const width = +svg.attr("width") - margin.left - margin.right;
 const height = +svg.attr("height") - margin.top - margin.bottom;
 
@@ -127,7 +127,7 @@ d3.csv("data.csv", d => {
   //
   // draw head-mounted-display images
   //
-  const imageScaleFactor = 10;
+  const imageScaleFactor = 8;
   const images = svg.selectAll("image")
     .data(data)
     .enter()
