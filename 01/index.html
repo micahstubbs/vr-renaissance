@@ -26,6 +26,10 @@ const parseDate = d3.utcParse('%Y%B');
 
 d3.csv('data.csv', d => {
   d.unitsShipped = +d.unitsShipped;
+  d.imageWidth = +d.imageWidth;
+  d.imageHeight = +d.imageHeight;
+  d.imageXOffset = +d.imageXOffset;
+  d.imageYOffset = +d.imageYOffset;
   d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
   return d;
 }, (error, data) => {
@@ -119,6 +123,39 @@ d3.csv('data.csv', d => {
       .style('fill', 'black')
       .style('fill-opacity', 1.0)
       .on('mouseover', d => console.log(d));
+
+  //
+  // draw head-mounted-display images
+  //
+  const imageScaleFactor = 8;
+  const images = svg.selectAll('image')
+    .data(data)
+    .enter()
+    .append('svg:image')
+      .attr('xlink:href', d => d.imageFileName)
+      .attr('x', d => (x(d.launchDate)   + margin.left + d.imageXOffset  - (d.imageWidth  / imageScaleFactor) / 2))
+      .attr('y', d => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (d.imageHeight / imageScaleFactor)))
+      .attr('width', d => d.imageWidth / imageScaleFactor)
+      .attr('height', d => d.imageHeight / imageScaleFactor)
+      .call(d3.drag()
+        .on('start', dragstarted)
+        .on('drag', dragged)
+        .on('end', dragended));
+
+  function dragstarted(d) {
+    d3.select(this)
+      .raise()
+      .classed('active', true);
+  }
+  function dragged(d) {
+    d3.select(this)
+      .attr('x', d.x = d3.event.x)
+      .attr('y', d.y = d3.event.y);
+  }
+  function dragended(d) {
+    d3.select(this)
+      .classed('active', false);
+  }
 
   // start with the axes hidden
   let axesVisible = false;
