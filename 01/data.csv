@@ -1,8 +1,8 @@
 company,product,launchMonth,launchYear,unitsShipped,unitsPrefix,unitsSuffix,imageFileName,imageWidth,imageHeight,imageXOffset,imageYOffset
 Google,Cardboard,June,2015,10000000,,+,google-cardboard.png,503,403,2,-10
 Samsung,GearVR,December,2015,2300000,,,samsung-gear-vr.png,561,424,14,-15
-Microsoft,Hololens,March,2016,10000,~,,microsoft-hololens.png,445,213,0,-6
-Oculus,Rift CV1,April,2016,350000,~,,oculus-rift-cv1.png,466,367,8,-5
-HTC,Vive,May,2016,500000,~,,htc-vive.png,453,350,10,-35
+Microsoft,Hololens,March,2016,10000,~,,microsoft-hololens.png,445,213,2,-6
+Oculus,Rift CV1,April,2016,350000,~,,oculus-rift-cv1.png,466,367,6,-15
+HTC,Vive,May,2016,500000,~,,htc-vive.png,453,350,8,-45
 Sony,Playstation VR,October,2016,2600000,,,sony-playstation-vr.png,634,548,10,-5
 Google,Daydream VR,November,2016,500000,,,google-daydream-vr.png,588,514,20,0

@@ -25,6 +25,8 @@
             .data(lines)
             .enter()
             .append('tspan')
+            .attr('class', (d, i) => `line${i}`)
+            .attr('xml:space', 'preserve')
             .text(function(d) { return d; })
             .attr('x', 0)
             .attr('dy', function(d,i) { return i ? lh || 15 : 0; });

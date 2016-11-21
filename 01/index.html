@@ -11,7 +11,7 @@
 <script>
 
 const svg = d3.select('svg');
-const margin = {top: 150, right: 20, bottom: 30, left: 60};
+const margin = {top: 150, right: 60, bottom: 30, left: 60};
 const width = +svg.attr('width') - margin.left - margin.right;
 const height = +svg.attr('height') - margin.top - margin.bottom;
 
@@ -184,6 +184,8 @@ d3.csv('data.csv', d => {
   // add labels
   //
 
+  const format = d3.format(".2s")
+
   // collect annotations data
   // generate data-driven annotation positions
   const annotations = [];
@@ -193,7 +195,7 @@ d3.csv('data.csv', d => {
       "text": [
       `${d.company} ${d.product}`,
       `${d.launchMonth} ${d.launchYear}`,
-      `${d.unitsPrefix}${d.unitsShipped}${d.unitsSuffix}`
+      `${d.unitsPrefix}${format(d.unitsShipped)}${d.unitsSuffix} shipped`
       ],
       "textOffset": [
         x(d.launchDate) + margin.left - 40,
@@ -203,7 +205,64 @@ d3.csv('data.csv', d => {
   })
 
   // manually customize annotation positions
-  
+  annotations.forEach((d, i) => {
+    if(d.text[0] === 'Google Cardboard') {
+      // pad strings to achieve text alignment
+      annotations[i].text[0] = ['', annotations[i].text[0]].join('');
+      annotations[i].text[1] = ['       ', annotations[i].text[1]].join('');
+      annotations[i].text[2] = ['   ', annotations[i].text[2]].join('');
+      annotations[i].textOffset[0] = 58;
+      annotations[i].textOffset[1] = 46;
+    }
+    if(d.text[0] === 'Samsung GearVR') {
+      // pad strings to achieve text alignment
+      annotations[i].text[0] = ['', annotations[i].text[0]].join('');
+      annotations[i].text[1] = [' ', annotations[i].text[1]].join('');
+      annotations[i].text[2] = ['   ', annotations[i].text[2]].join('');
+      annotations[i].textOffset[0] = 310;
+      annotations[i].textOffset[1] = 289;
+    }
+    if(d.text[0] === 'Microsoft Hololens') {
+      // pad strings to achieve text alignment
+      annotations[i].text[0] = ['', annotations[i].text[0]].join('');
+      annotations[i].text[1] = ['', annotations[i].text[1]].join('');
+      annotations[i].text[2] = ['', annotations[i].text[2]].join('');
+      annotations[i].textOffset[0] = 360;
+      annotations[i].textOffset[1] = 435;
+    }
+    if(d.text[0] === 'Oculus Rift CV1') {
+      // pad strings to achieve text alignment
+      annotations[i].text[0] = ['', annotations[i].text[0]].join('');
+      annotations[i].text[1] = ['  ', annotations[i].text[1]].join('');
+      annotations[i].text[2] = ['', annotations[i].text[2]].join('');
+      annotations[i].textOffset[0] = 440;
+      annotations[i].textOffset[1] = 368;
+    }
+    if(d.text[0] === 'HTC Vive') {
+      // pad strings to achieve text alignment
+      annotations[i].text[0] = ['', annotations[i].text[0]].join('');
+      annotations[i].text[1] = ['', annotations[i].text[1]].join('');
+      annotations[i].text[2] = ['', annotations[i].text[2]].join('');
+      annotations[i].textOffset[0] = 530;
+      annotations[i].textOffset[1] = 330;
+    }
+    if(d.text[0] === 'Sony Playstation VR') {
+      // pad strings to achieve text alignment
+      annotations[i].text[0] = ['', annotations[i].text[0]].join('');
+      annotations[i].text[1] = ['', annotations[i].text[1]].join('');
+      annotations[i].text[2] = ['', annotations[i].text[2]].join('');
+      annotations[i].textOffset[0] = 717;
+      annotations[i].textOffset[1] = 286;
+    }
+    if(d.text[0] === 'Google Daydream VR') {
+      // pad strings to achieve text alignment
+      annotations[i].text[0] = ['', annotations[i].text[0]].join('');
+      annotations[i].text[1] = ['', annotations[i].text[1]].join('');
+      annotations[i].text[2] = ['', annotations[i].text[2]].join('');
+      annotations[i].textOffset[0] = 841;
+      annotations[i].textOffset[1] = 402;
+    }
+  })
 
 
   // draw the annotation layer
@@ -239,7 +298,7 @@ d3.csv('data.csv', d => {
   swoopySel.selectAll('text')
     .each(function(d){
       d3.select(this)
-        .text('')                     
+        .text('')                  
         .tspans(d.text) // d3.wordwrap(d.text, 22)
     })
 
