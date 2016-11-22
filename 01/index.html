@@ -42,8 +42,6 @@ function render(err, response) {
   data.forEach(d => {
     d.unitsShipped = +d.unitsShipped;
     d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
-    d.imageWidth = +d.imageWidth;
-    d.imageHeight = +d.imageHeight;
     d.imageXOffset = +d.imageXOffset;
     d.imageYOffset = +d.imageYOffset;
   })
@@ -167,9 +165,9 @@ d3.csv('data.csv', d => {
     .append('svg:image')
       .attr('xlink:href', (d, i) => annotationsData[i].imageFileName)
       .attr('x', (d, i) => (x(d.launchDate)   + margin.left + d.imageXOffset  - (annotationsData[i].imageWidth  / imageScaleFactor) / 2))
-      .attr('y', d => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (d.imageHeight / imageScaleFactor)))
+      .attr('y', (d, i) => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (annotationsData[i].imageHeight / imageScaleFactor)))
       .attr('width', (d, i) => annotationsData[i].imageWidth / imageScaleFactor)
-      .attr('height', d => d.imageHeight / imageScaleFactor)
+      .attr('height', (d, i) => annotationsData[i].imageHeight / imageScaleFactor)
       .call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
