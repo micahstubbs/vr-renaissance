@@ -52,20 +52,6 @@ function render(err, response) {
     d.imageYOffset = +d.imageYOffset;
   })
 
-/*
-d3.csv('data.csv', d => {
-  d.unitsShipped = +d.unitsShipped;
-  d.imageWidth = +d.imageWidth;
-  d.imageHeight = +d.imageHeight;
-  d.imageXOffset = +d.imageXOffset;
-  d.imageYOffset = +d.imageYOffset;
-  d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
-  return d;
-}, (error, data) => {
-  if (error) throw error;
-  console.log('data', data);
-*/
-
   // x.domain(data.map(d => d.letter));
   y.domain([0, d3.max(data, d => d.unitsShipped)]);
 
@@ -164,8 +150,8 @@ d3.csv('data.csv', d => {
     .enter()
     .append('svg:image')
       .attr('xlink:href', (d, i) => annotationsData[i].imageFileName)
-      .attr('x', (d, i) => (x(d.launchDate)   + margin.left + d.imageXOffset  - (annotationsData[i].imageWidth  / imageScaleFactor) / 2))
-      .attr('y', (d, i) => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (annotationsData[i].imageHeight / imageScaleFactor)))
+      .attr('x', (d, i) => (x(d.launchDate)   + margin.left + annotationsData[i].imageXOffset  - (annotationsData[i].imageWidth  / imageScaleFactor) / 2))
+      .attr('y', (d, i) => (y(d.unitsShipped) + margin.top  + annotationsData[i].imageYOffset  - (annotationsData[i].imageHeight / imageScaleFactor)))
       .attr('width', (d, i) => annotationsData[i].imageWidth / imageScaleFactor)
       .attr('height', (d, i) => annotationsData[i].imageHeight / imageScaleFactor)
       .call(d3.drag()
