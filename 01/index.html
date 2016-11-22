@@ -9,7 +9,7 @@
 <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
 <script src='swoopy-drag.js'></script>
 <script src="d3-jetpack.js"></script>
-<script>
+<script lang="babel" type="text/babel">
 
 const svg = d3.select('svg');
 const margin = {top: 150, right: 60, bottom: 30, left: 60};
@@ -200,11 +200,23 @@ function render(err, response) {
 
   const format = d3.format(".2s")
 
+
+
   // collect annotations data
   // generate data-driven annotation positions
   // pad strings to achieve text alignment
   const annotations = [];
   data.forEach((d, i) => {
+    let textXOffset = x(d.launchDate) + margin.left - 40;
+    let textYOffset = y(d.unitsShipped) + margin.top - 100;
+
+    if (typeof annotationsData[i].textXOffset !== 'undefined') {
+      textXOffset = annotationsData[i].textXOffset;
+    }
+    if (typeof annotationsData[i].textYOffset !== 'undefined') {
+      textYOffset = annotationsData[i].textYOffset;
+    } 
+
     annotations.push({
       "path": "M 610,143 A 81.322 81.322 0 0 1 564,221",
       "text": [
@@ -213,44 +225,11 @@ function render(err, response) {
       `${annotationsData[i].textOffsetLine2}${d.unitsPrefix}${format(d.unitsShipped)}${d.unitsSuffix} shipped`
       ],
       "textOffset": [
-        x(d.launchDate) + margin.left - 40,
-        y(d.unitsShipped) + margin.top - 100
+        textXOffset,
+        textYOffset
       ]
     })
   })
-
-  // manually customize annotation positions
-  annotations.forEach((d, i) => {
-    if(d.text[0] === 'Google Cardboard') {
-      annotations[i].textOffset[0] = 58;
-      annotations[i].textOffset[1] = 46;
-    }
-    if(d.text[0] === 'Samsung GearVR') {
-      annotations[i].textOffset[0] = 310;
-      annotations[i].textOffset[1] = 289;
-    }
-    if(d.text[0] === 'Microsoft Hololens') {
-      annotations[i].textOffset[0] = 360;
-      annotations[i].textOffset[1] = 435;
-    }
-    if(d.text[0] === 'Oculus Rift CV1') {
-      annotations[i].textOffset[0] = 416;
-      annotations[i].textOffset[1] = 378;
-    }
-    if(d.text[0] === 'HTC Vive') {
-      annotations[i].textOffset[0] = 578;
-      annotations[i].textOffset[1] = 375;
-    }
-    if(d.text[0] === 'Sony Playstation VR') {
-      annotations[i].textOffset[0] = 695;
-      annotations[i].textOffset[1] = 286;
-    }
-    if(d.text[0] === 'Google Daydream VR') {
-      annotations[i].textOffset[0] = 841;
-      annotations[i].textOffset[1] = 402;
-    }
-  })
-
 
   // draw the annotation layer
   const swoopy = d3.swoopyDrag()
