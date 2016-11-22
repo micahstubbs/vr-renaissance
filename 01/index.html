@@ -5,6 +5,7 @@
 </style>
 <svg width='960' height='500'></svg>
 <script src='https://d3js.org/d3.v4.js'></script>
+<script src="https://d3js.org/d3-queue.v3.min.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
 <script src='swoopy-drag.js'></script>
 <script src="d3-jetpack.js"></script>
@@ -27,6 +28,33 @@ const g = svg.append('g')
 
 const parseDate = d3.utcParse('%Y%B');
 
+d3.queue()
+  .defer(d3.csv, 'data.csv')
+  .defer(d3.json, 'annotations.json')
+  .awaitAll(render);
+
+function render(err, response) {
+  console.log('response', response);
+  const data = response[0];
+  const annotationsData = response[1];
+
+  // format input data
+  data.forEach(d => {
+    d.unitsShipped = +d.unitsShipped;
+    d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
+    d.imageWidth = +d.imageWidth;
+    d.imageHeight = +d.imageHeight;
+    d.imageXOffset = +d.imageXOffset;
+    d.imageYOffset = +d.imageYOffset;
+  })
+  annotationsData.forEach(d => {
+    d.imageWidth = +d.imageWidth;
+    d.imageHeight = +d.imageHeight;
+    d.imageXOffset = +d.imageXOffset;
+    d.imageYOffset = +d.imageYOffset;
+  })
+
+/*
 d3.csv('data.csv', d => {
   d.unitsShipped = +d.unitsShipped;
   d.imageWidth = +d.imageWidth;
@@ -37,6 +65,8 @@ d3.csv('data.csv', d => {
   return d;
 }, (error, data) => {
   if (error) throw error;
+  console.log('data', data);
+*/
 
   // x.domain(data.map(d => d.letter));
   y.domain([0, d3.max(data, d => d.unitsShipped)]);
@@ -309,5 +339,5 @@ d3.csv('data.csv', d => {
   // d3.select('g.swoopy').selectAll('g')
   //   .attr('transform', 'translate(0,-20)');
 
-});
+};
 </script>
