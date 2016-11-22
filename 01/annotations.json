@@ -5,7 +5,9 @@
     "imageHeight":403,
     "imageXOffset":2,
     "imageYOffset":-10,
-    "launchDate":"2015-06-01T00:00:00.000Z"
+    "textOffsetLine0": "",
+    "textOffsetLine1": "       ",
+    "textOffsetLine2": "   "
   },
   {  
     "imageFileName":"samsung-gear-vr.png",
@@ -13,7 +15,9 @@
     "imageHeight":424,
     "imageXOffset":14,
     "imageYOffset":-15,
-    "launchDate":"2015-12-01T00:00:00.000Z"
+    "textOffsetLine0": "",
+    "textOffsetLine1": " ",
+    "textOffsetLine2": "   "
   },
   {  
     "imageFileName":"microsoft-hololens.png",
@@ -21,7 +25,9 @@
     "imageHeight":213,
     "imageXOffset":2,
     "imageYOffset":-6,
-    "launchDate":"2016-03-01T00:00:00.000Z"
+    "textOffsetLine0": "",
+    "textOffsetLine1": "",
+    "textOffsetLine2": ""
   },
   {  
     "imageFileName":"oculus-rift-cv1.png",
@@ -29,7 +35,9 @@
     "imageHeight":367,
     "imageXOffset":6,
     "imageYOffset":-15,
-    "launchDate":"2016-04-01T00:00:00.000Z"
+    "textOffsetLine0": "",
+    "textOffsetLine1": "         ",
+    "textOffsetLine2": ""
   },
   {  
     "imageFileName":"htc-vive.png",
@@ -37,7 +45,9 @@
     "imageHeight":350,
     "imageXOffset":8,
     "imageYOffset":-45,
-    "launchDate":"2016-05-01T00:00:00.000Z"
+    "textOffsetLine0": "",
+    "textOffsetLine1": "",
+    "textOffsetLine2": ""
   },
   {  
     "imageFileName":"sony-playstation-vr.png",
@@ -45,7 +55,9 @@
     "imageHeight":548,
     "imageXOffset":10,
     "imageYOffset":-5,
-    "launchDate":"2016-10-01T00:00:00.000Z"
+    "textOffsetLine0": "",
+    "textOffsetLine1": "      ",
+    "textOffsetLine2": "      "
   },
   {  
     "imageFileName":"google-daydream-vr.png",
@@ -53,6 +65,8 @@
     "imageHeight":514,
     "imageXOffset":20,
     "imageYOffset":0,
-    "launchDate":"2016-11-01T00:00:00.000Z"
+    "textOffsetLine0": "",
+    "textOffsetLine1": "",
+    "textOffsetLine2": ""
   }
 ]
