@@ -212,7 +212,10 @@ function render(err, response) {
     }
     if (typeof annotationsData[i].textYOffset !== 'undefined') {
       textYOffset = annotationsData[i].textYOffset;
-    } 
+    }
+    if (typeof d.unitsSuffix === 'undefined') {
+      d.unitsSuffix = '';
+    }
 
     annotations.push({
       "path": "M 610,143 A 81.322 81.322 0 0 1 564,221",
