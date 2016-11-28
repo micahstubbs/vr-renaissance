@@ -9,7 +9,7 @@
     "textOffsetLine1": "      ",
     "textOffsetLine2": "   ",
     "textXOffset": 57,
-    "textYOffset": 135
+    "textYOffset": 45
   },
   {  
     "imageFileName":"samsung-gear-vr.png",
@@ -21,7 +21,7 @@
     "textOffsetLine1": " ",
     "textOffsetLine2": "   ",
     "textXOffset": 320,
-    "textYOffset": 148
+    "textYOffset": 63
   },
   {  
     "imageFileName":"microsoft-hololens.png",
@@ -33,7 +33,7 @@
     "textOffsetLine1": "",
     "textOffsetLine2": "",
     "textXOffset": 385,
-    "textYOffset": 286
+    "textYOffset": 229
   },
   {  
     "imageFileName":"oculus-rift-cv1.png",
@@ -45,7 +45,7 @@
     "textOffsetLine1": "         ",
     "textOffsetLine2": "",
     "textXOffset": 462,
-    "textYOffset": 188
+    "textYOffset": 112
   },
   {  
     "imageFileName":"htc-vive.png",
@@ -57,7 +57,7 @@
     "textOffsetLine1": "",
     "textOffsetLine2": "",
     "textXOffset": 548,
-    "textYOffset": 178
+    "textYOffset": 97
   },
   {  
     "imageFileName":"sony-playstation-vr.png",
@@ -69,7 +69,7 @@
     "textOffsetLine1": "      ",
     "textOffsetLine2": "      ",
     "textXOffset": 731,
-    "textYOffset": 154
+    "textYOffset": 64
   },
   {  
     "imageFileName":"google-daydream-vr.png",
@@ -81,6 +81,6 @@
     "textOffsetLine1": "",
     "textOffsetLine2": "",
     "textXOffset": 826,
-    "textYOffset": 287
+    "textYOffset": 214
   }
 ]
