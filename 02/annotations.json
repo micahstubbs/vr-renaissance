@@ -1,0 +1,86 @@
+[  
+  {  
+    "imageFileName":"google-cardboard.png",
+    "imageWidth": 503,
+    "imageHeight": 403,
+    "imageXOffset": 2,
+    "imageYOffset": 0,
+    "textOffsetLine0": "",
+    "textOffsetLine1": "      ",
+    "textOffsetLine2": "   ",
+    "textXOffset": 57,
+    "textYOffset": 135
+  },
+  {  
+    "imageFileName":"samsung-gear-vr.png",
+    "imageWidth": 561,
+    "imageHeight": 424,
+    "imageXOffset": 14,
+    "imageYOffset": -5,
+    "textOffsetLine0": "",
+    "textOffsetLine1": " ",
+    "textOffsetLine2": "   ",
+    "textXOffset": 320,
+    "textYOffset": 148
+  },
+  {  
+    "imageFileName":"microsoft-hololens.png",
+    "imageWidth": 445,
+    "imageHeight": 213,
+    "imageXOffset": 2,
+    "imageYOffset": -6,
+    "textOffsetLine0": "",
+    "textOffsetLine1": "",
+    "textOffsetLine2": "",
+    "textXOffset": 385,
+    "textYOffset": 286
+  },
+  {  
+    "imageFileName":"oculus-rift-cv1.png",
+    "imageWidth": 466,
+    "imageHeight": 367,
+    "imageXOffset": -2,
+    "imageYOffset": -5,
+    "textOffsetLine0": "",
+    "textOffsetLine1": "         ",
+    "textOffsetLine2": "",
+    "textXOffset": 462,
+    "textYOffset": 188
+  },
+  {  
+    "imageFileName":"htc-vive.png",
+    "imageWidth": 453,
+    "imageHeight": 350,
+    "imageXOffset": 14,
+    "imageYOffset": -10,
+    "textOffsetLine0": "",
+    "textOffsetLine1": "",
+    "textOffsetLine2": "",
+    "textXOffset": 548,
+    "textYOffset": 178
+  },
+  {  
+    "imageFileName":"sony-playstation-vr.png",
+    "imageWidth": 634,
+    "imageHeight": 548,
+    "imageXOffset": 10,
+    "imageYOffset": 0,
+    "textOffsetLine0": "",
+    "textOffsetLine1": "      ",
+    "textOffsetLine2": "      ",
+    "textXOffset": 731,
+    "textYOffset": 154
+  },
+  {  
+    "imageFileName":"google-daydream-vr.png",
+    "imageWidth": 588,
+    "imageHeight": 514,
+    "imageXOffset": 20,
+    "imageYOffset": 5,
+    "textOffsetLine0": "",
+    "textOffsetLine1": "",
+    "textOffsetLine2": "",
+    "textXOffset": 826,
+    "textYOffset": 287
+  }
+]

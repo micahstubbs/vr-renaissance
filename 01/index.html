@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <meta charset='utf-8'>
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 <style>
 </style>
 <svg width='960' height='500'></svg>
 <script src='https://d3js.org/d3.v4.js'></script>
-<script src="https://d3js.org/d3-queue.v3.min.js"></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
+<script src='https://d3js.org/d3-queue.v3.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.19.0/babel.min.js'></script>
 <script src='swoopy-drag.js'></script>
-<script src="d3-jetpack.js"></script>
-<script lang="babel" type="text/babel">
+<script src='d3-jetpack.js'></script>
+<script lang='babel' type='text/babel'>
 
 const svg = d3.select('svg');
 const margin = {top: 150, right: 60, bottom: 30, left: 60};
@@ -99,7 +99,7 @@ function render(err, response) {
     .attr('orient', 'auto')
     .attr('overflow', 'visible')
     .append('polygon')
-      .attr('points', "-1,0 -2,2 2,0 -2,-2")
+      .attr('points', '-1,0 -2,2 2,0 -2,-2')
       .attr('fill', 'black');
 
   // draw the baseline with an arrow
@@ -197,7 +197,7 @@ function render(err, response) {
   //
   // add labels
   //
-  const format = d3.format(".2s")
+  const format = d3.format('.2s')
 
   // collect annotations data
   // generate data-driven annotation positions
@@ -218,13 +218,13 @@ function render(err, response) {
     }
 
     annotations.push({
-      "path": "M 610,143 A 81.322 81.322 0 0 1 564,221",
-      "text": [
+      'path': 'M 610,143 A 81.322 81.322 0 0 1 564,221',
+      'text': [
       `${annotationsData[i].textOffsetLine0}${d.company} ${d.product}`,
       `${annotationsData[i].textOffsetLine1}${d.launchMonth} ${d.launchYear}`,
       `${annotationsData[i].textOffsetLine2}${d.unitsPrefix}${format(d.unitsShipped)}${d.unitsSuffix} shipped`
       ],
-      "textOffset": [
+      'textOffset': [
         textXOffset,
         textYOffset
       ]

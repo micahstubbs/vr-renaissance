@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <meta charset='utf-8'>
+<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 <style>
 </style>
-<svg width='960' height='539'></svg>
+<svg width='960' height='500'></svg>
 <script src='https://d3js.org/d3.v4.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.10.3/babel.min.js'></script>
+<script src='https://d3js.org/d3-queue.v3.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.19.0/babel.min.js'></script>
 <script src='swoopy-drag.js'></script>
-<script src="d3-jetpack.js"></script>
-<script>
-
+<script src='d3-jetpack.js'></script>
+<script lang='babel' type='text/babel'>
 const svg = d3.select('svg');
 const margin = {top: 230, right: 20, bottom: 30, left: 60};
 const width = +svg.attr('width') - margin.left - margin.right;
@@ -26,16 +27,29 @@ const g = svg.append('g')
 
 const parseDate = d3.utcParse('%Y%B');
 
-d3.csv('data.csv', d => {
-  d.unitsShipped = +d.unitsShipped;
-  d.imageWidth = +d.imageWidth;
-  d.imageHeight = +d.imageHeight;
-  d.imageXOffset = +d.imageXOffset;
-  d.imageYOffset = +d.imageYOffset;
-  d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
-  return d;
-}, (error, data) => {
-  if (error) throw error;
+d3.queue()
+  .defer(d3.csv, 'data.csv')
+  .defer(d3.json, 'annotations.json')
+  .awaitAll(render);
+
+function render(err, response) {
+  console.log('response', response);
+  const data = response[0];
+  const annotationsData = response[1];
+
+  // format input data
+  data.forEach(d => {
+    d.unitsShipped = +d.unitsShipped;
+    d.launchDate = parseDate(`${d.launchYear}${d.launchMonth}`);
+    d.imageXOffset = +d.imageXOffset;
+    d.imageYOffset = +d.imageYOffset;
+  })
+  annotationsData.forEach(d => {
+    d.imageWidth = +d.imageWidth;
+    d.imageHeight = +d.imageHeight;
+    d.imageXOffset = +d.imageXOffset;
+    d.imageYOffset = +d.imageYOffset;
+  })
 
   // x.domain(data.map(d => d.letter));
   y.domain([Number('1e-1'), d3.max(data, d => d.unitsShipped)]);
@@ -134,11 +148,11 @@ d3.csv('data.csv', d => {
     .data(data)
     .enter()
     .append('svg:image')
-      .attr('xlink:href', d => d.imageFileName)
-      .attr('x', d => (x(d.launchDate)   + margin.left + d.imageXOffset  - (d.imageWidth  / imageScaleFactor) / 2))
-      .attr('y', d => (y(d.unitsShipped) + margin.top  + d.imageYOffset  - (d.imageHeight / imageScaleFactor)))
-      .attr('width', d => d.imageWidth / imageScaleFactor)
-      .attr('height', d => d.imageHeight / imageScaleFactor)
+      .attr('xlink:href', (d, i) => annotationsData[i].imageFileName)
+      .attr('x', (d, i) => (x(d.launchDate)   + margin.left + annotationsData[i].imageXOffset  - (annotationsData[i].imageWidth  / imageScaleFactor) / 2))
+      .attr('y', (d, i) => (y(d.unitsShipped) + margin.top  + annotationsData[i].imageYOffset  - (annotationsData[i].imageHeight / imageScaleFactor)))
+      .attr('width', (d, i) => annotationsData[i].imageWidth / imageScaleFactor)
+      .attr('height', (d, i) => annotationsData[i].imageHeight / imageScaleFactor)
       .call(d3.drag()
         .on('start', dragstarted)
         .on('drag', dragged)
@@ -178,6 +192,86 @@ d3.csv('data.csv', d => {
       axesVisible = true;
     } 
   }
-});
 
+  //
+  // add labels
+  //
+  const format = d3.format('.2s')
+
+  // collect annotations data
+  // generate data-driven annotation positions
+  // pad strings to achieve text alignment
+  const annotations = [];
+  data.forEach((d, i) => {
+    let textXOffset = x(d.launchDate) + margin.left - 40;
+    let textYOffset = y(d.unitsShipped) + margin.top - 100;
+
+    if (typeof annotationsData[i].textXOffset !== 'undefined') {
+      textXOffset = annotationsData[i].textXOffset;
+    }
+    if (typeof annotationsData[i].textYOffset !== 'undefined') {
+      textYOffset = annotationsData[i].textYOffset;
+    }
+    if (typeof d.unitsSuffix === 'undefined') {
+      d.unitsSuffix = '';
+    }
+
+    annotations.push({
+      'path': 'M 610,143 A 81.322 81.322 0 0 1 564,221',
+      'text': [
+      `${annotationsData[i].textOffsetLine0}${d.company} ${d.product}`,
+      `${annotationsData[i].textOffsetLine1}${d.launchMonth} ${d.launchYear}`,
+      `${annotationsData[i].textOffsetLine2}${d.unitsPrefix}${format(d.unitsShipped)}${d.unitsSuffix} shipped`
+      ],
+      'textOffset': [
+        textXOffset,
+        textYOffset
+      ]
+    })
+  })
+
+  // draw the annotation layer
+  const swoopy = d3.swoopyDrag()
+    .x(d => 0)
+    .y(d => 0)
+    .draggable(1)
+    .annotations(annotations)
+
+  const swoopySel = svg
+    .append('g.swoopy')
+    .call(swoopy)
+
+  // no circles for now
+  swoopySel.selectAll('circle')
+    .remove();
+
+  // no paths or arrowheads for now
+  swoopySel.selectAll('path')
+    .remove();
+    // .attr('marker-end', 'url(#arrow)')
+
+
+  // svg.append('marker')
+  //   .attr('id', 'arrow')
+  //   .attr('viewBox', '-10 -10 20 20')
+  //   .attr('markerWidth', 20)
+  //   .attr('markerHeight', 20)
+  //   .attr('orient', 'auto')
+  //   .append('path')
+  //     .attr('d', 'M-6.75,-6.75 L 0,0 L -6.75,6.75')
+
+  swoopySel.selectAll('text')
+    .each(function(d){
+      d3.select(this)
+        .text('')                  
+        .tspans(d.text) // d3.wordwrap(d.text, 22)
+    })
+
+  swoopySel.selectAll('text')
+    .style('font-size', 12)
+    .style('font-family', 'Roboto');
+
+  // d3.select('g.swoopy').selectAll('g')
+  //   .attr('transform', 'translate(0,-20)');
+};
 </script>
